@@ -19,15 +19,15 @@ public class MainController {
     //Отслеживает Get запросы и отправляет информацию на сервер для расчетов
     @PostMapping("/")
     public String mainPost(@RequestParam String sum, @RequestParam String years, @RequestParam String percent, @RequestParam String accrued,
-                           @RequestParam(defaultValue = "0") String refillIn, Model model) {
+                           @RequestParam(defaultValue = "0") String refillIn,@RequestParam String refill, Model model) {
 
         Deposit deposit = new Deposit(Long.parseLong(sum), Long.parseLong(years), Double.parseDouble(percent), Long.parseLong(refillIn));
         ProfitCalculation profitCalculation = new ProfitCalculation();
         String[] calculation;
         if (accrued.contains("Выплачивать")) {
-            calculation = profitCalculation.simplePercentages(deposit).split("##");
+            calculation = profitCalculation.simplePercentages(deposit, refill).split("##");
         } else {
-            calculation = profitCalculation.compoundInterest(deposit).split("##");
+            calculation = profitCalculation.compoundInterest(deposit, refill).split("##");
         }
         model.addAttribute("calculation" , calculation);
         return "main";

@@ -11,7 +11,10 @@ public class ProfitCalculation {
                 "Сумма вклада с процентами: " + sumOfDeposit + " ₽";
     }
     //Расчет простого процента
-    public String simplePercentages(Deposit deposit){
+    public String simplePercentages(Deposit deposit, String refill){
+        if (refill.contains("Не будет")) {
+            deposit.setRefill(0);
+        }
         double profit = 0;
         long sum = deposit.getSum();
         for (int i = 0; i < deposit.getYears(); i++) {
@@ -26,7 +29,10 @@ public class ProfitCalculation {
     }
 
     //Расчет сложного процента
-    public String compoundInterest(Deposit deposit){
+    public String compoundInterest(Deposit deposit,  String refilll){
+        if (refilll.contains("Не будет")) {
+            deposit.setRefill(0);
+        }
         double profit;
         long sum = deposit.getSum();
         long refill = 0;
